@@ -2,22 +2,24 @@
 %{!?scl:%global pkg_name %{name}}
 
 %global	gem_name	rspec
-# not necessarily same as %%{version}
-%global dep_version 3.4.2
 
 Summary:	Behaviour driven development (BDD) framework for Ruby
 Name:		%{?scl_prefix}rubygem-%{gem_name}
 Version:	3.4.0
-Release:	3%{?dist}
+Release:	4%{?dist}
 Group:		Development/Languages
 License:	MIT
 URL:		http://rspec.info
 Source0:	http://rubygems.org/gems/%{gem_name}-%{version}.gem
 
 Requires: %{?scl_prefix_ruby}rubygems
-Requires: %{?scl_prefix}rubygem(rspec-core) = %{dep_version}
-Requires: %{?scl_prefix}rubygem(rspec-mocks) = %{dep_version}
-Requires: %{?scl_prefix}rubygem(rspec-expectations) = %{dep_version}
+# rspec dependencies have different versions
+Requires: %{?scl_prefix}rubygem(rspec-core) => 3.4.0
+Requires: %{?scl_prefix}rubygem(rspec-core) < 3.5
+Requires: %{?scl_prefix}rubygem(rspec-expectations) => 3.4.0
+Requires: %{?scl_prefix}rubygem(rspec-expectations) < 3.5
+Requires: %{?scl_prefix}rubygem(rspec-mocks) => 3.4.0
+Requires: %{?scl_prefix}rubygem(rspec-mocks) < 3.5
 Requires: %{?scl_prefix_ruby}ruby(release)
 BuildRequires:	%{?scl_prefix_ruby}rubygems-devel
 BuildRequires:	%{?scl_prefix_ruby}ruby(release)
@@ -69,6 +71,9 @@ cp -a .%{gem_dir}/* \
 %doc	%{gem_docdir}
 
 %changelog
+* Tue Feb 23 2016 Pavel Valena <pvalena@redhat.com> - 3.4.0-4
+- Fix rubygem-rspec-* version Requires
+
 * Mon Feb 22 2016 Pavel Valena <pvalena@redhat.com> - 3.4.0-3
 - Update to 3.4.0
 
